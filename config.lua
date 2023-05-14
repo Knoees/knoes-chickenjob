@@ -84,8 +84,8 @@ Config.Locales = {
     ['sell_chicken'] = 'You sold packaged chicken',
     ['cancel'] = 'Cancel',
     ['cut_chicken'] = 'You Cut Chickens',
-    ['not_have_chicken'] = 'You dont have any chickens',
-    ['not_have_cutchicken'] = 'You dont have any cut chickens',
+    ['not_have_chicken'] = 'You don\'t have any chickens',
+    ['not_have_cutchicken'] = 'You don\'t have any cut chickens',
     ['packing_chicken'] = 'You packed the chickens',
     ['mail_sender'] = 'Chicken Factory',
     ['mail_subject'] = 'Job',
@@ -94,8 +94,9 @@ Config.Locales = {
     ['get_vehicle'] = 'Get Vehicle',
     ['vehicle_model'] = 'Car: Bison',
     ['delete_car'] = 'Return the Car',
-    ['already_vehicle'] = 'Theres already a vehicle outside',
+    ['already_vehicle'] = 'There is already a vehicle outside',
     ['returned_vehicle'] = 'You returned the vehicle',
+    ['itemerror'] = 'Can\'t give the item'
 }
 
 

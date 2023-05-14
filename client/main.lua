@@ -1,69 +1,67 @@
 local QBCore = exports['qb-core']:GetCoreObject()
 
+-- ▄▄▄▄▄▄▄▄▄▄▄
+--  Functions
+-- ▄▄▄▄▄▄▄▄▄▄▄
 
-RegisterNetEvent('knoes-chickenjob:picking', function()
-	QBCore.Functions.Progressbar('collect_chicken', Config.Locales['collect_chicken'], math.random(11000, 15000), false, true, {
-	  disableMovement = true,
-	  disableCarMovement = true,
-	  disableMouse = false,
-	  disableCombat = true,
-	  }, {
-	  animDict = 'mini@repair',
-	  anim = 'fixing_a_player',
-	  flags = 16,
-	  }, {}, {}, function() 
-		  TriggerServerEvent('knoes:chickenpicking')
-	  end, function() 
-	  QBCore.Functions.Notify(Config.Locales['cancel'], "error")
-	end)
-  end)
+local function LoadDict(dict)
+    RequestAnimDict(dict)
+	while not HasAnimDictLoaded(dict) do
+	  	Wait(10)
+    end
+end
 
+local function processchicken()
+    local count = 0
+    if(count == 0) then
+		local dict = 'anim@amb@business@coc@coc_unpack_cut_left@'
+		LoadDict(dict)
+		FreezeEntityPosition(GetPlayerPed(-1),true)
+		TaskPlayAnim(GetPlayerPed(-1), dict, "coke_cut_v1_coccutter", 3.0, -8, -1, 63, 0, 0, 0, 0 )
+		local PedCoords = GetEntityCoords(GetPlayerPed(-1))
+		local yarra = CreateObject(GetHashKey('prop_knife'),PedCoords.x, PedCoords.y,PedCoords.z, true, true, true)
+		AttachEntityToEntity(yarra, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 0), 0.13, 0.14, 0.09, 40.0, 0.0, 0.0, false, false, false, false, 2, true)
+		SetEntityHeading(GetPlayerPed(-1), 311.0)
+		local nane = CreateObject(GetHashKey('prop_int_cf_chick_01'),-94.87, 6207.008, 30.08, true, true, true)
+		SetEntityRotation(nane,90.0, 0.0, 45.0, 1,true)
+		Wait(5000)
+		FreezeEntityPosition(GetPlayerPed(-1),false)
+		DeleteEntity(nane)
+		DeleteEntity(yarra)
+		ClearPedTasks(PlayerPedId())
+	
+    	TriggerServerEvent("knoes:chickenprocessing")
+    end
+end
 
-RegisterNetEvent('knoes-chickenjob:proccessing', function()
-			local hasItem = QBCore.Functions.HasItem('alivechicken')
-			if hasItem then
-			QBCore.Functions.Progressbar('chicken_processing', Config.Locales['chicken_processing'], math.random(8500, 10000), false, true, {
-			disableMovement = true,
-			disableCarMovement = true,
-			disableMouse = false,
-			disableCombat = true,
-			}, {
-			animDict = 'mini@repair',
-			anim = 'fixing_a_player',
-			flags = 16,
-			}, {}, {}, function() 
-				processchicken()
-			end, function() 
-			QBCore.Functions.Notify(Config.Locales['cancel'], "error")
-		end)
-	else
-		QBCore.Functions.Notify(Config.Locales['not_have_chicken'], "error")
-	end
-end)  
+local function packedchicken()
+    local count = 0
 
-RegisterNetEvent('knoes-chickenjob:packing', function()
-			local hasItem = QBCore.Functions.HasItem('slaughteredchicken')
-			if hasItem then
-			QBCore.Functions.Progressbar('chicken_packet', Config.Locales['chicken_packet'], math.random(11000, 15000), false, true, {
-			disableMovement = true,
-			disableCarMovement = true,
-			disableMouse = false,
-			disableCombat = true,
-			}, {
-			animDict = 'mini@repair',
-			anim = 'fixing_a_player',
-			flags = 16,
-			}, {}, {}, function() 
-				packedchicken()
-			end, function() 
-			QBCore.Functions.Notify(Config.Locales['cancel'], "error")
-		end)
+    if(count == 0) then
+		SetEntityHeading(GetPlayerPed(-1), 40.0)
+		local PedCoords = GetEntityCoords(GetPlayerPed(-1))
+		local zort = CreateObject(GetHashKey('prop_cs_steak'),PedCoords.x, PedCoords.y,PedCoords.z, true, true, true)
+		AttachEntityToEntity(zort, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 0x49D9), 0.15, 0.0, 0.01, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
+		local port = CreateObject(GetHashKey('prop_cs_clothes_box'),PedCoords.x, PedCoords.y,PedCoords.z, true, true, true)
+		AttachEntityToEntity(port, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 57005), 0.13, 0.0, -0.16, 250.0, -30.0, 0.0, false, false, false, false, 2, true)
+		LoadDict("anim@heists@ornate_bank@grab_cash_heels")
+		TaskPlayAnim(PlayerPedId(), "anim@heists@ornate_bank@grab_cash_heels", "grab", 8.0, -8.0, -1, 1, 0, false, false, false)
+		Wait(6500)
+		FreezeEntityPosition(GetPlayerPed(-1),false)
+		DeleteEntity(port)
+		DeleteEntity(zort)
+		ClearPedTasks(PlayerPedId())
+	
+       TriggerServerEvent("knoes:chickenpacking")
+	   QBCore.Functions.Notify(Config.Locales['packing_chicken'], "success")
 	else
 		QBCore.Functions.Notify(Config.Locales['not_have_cutchicken'], "error")
-	end
-end)
+    end
+end
 
-
+-- ▄▄▄▄▄▄▄▄▄▄▄
+--  Targets
+-- ▄▄▄▄▄▄▄▄▄▄▄
 
 
 exports['qb-target']:AddBoxZone("collectchic", CollectChicken.targetZone, 1.4, 1.4, {
@@ -83,7 +81,7 @@ exports['qb-target']:AddBoxZone("collectchic", CollectChicken.targetZone, 1.4, 1
   })
 
 
-  exports['qb-target']:AddBoxZone("processing", ProcessingChicken.targetZone, 1.4, 1.4, {
+exports['qb-target']:AddBoxZone("processing", ProcessingChicken.targetZone, 1.4, 1.4, {
 	name="processing",
 	heading = ProcessingChicken.heading,
 	debugPoly = false,
@@ -99,7 +97,7 @@ exports['qb-target']:AddBoxZone("collectchic", CollectChicken.targetZone, 1.4, 1
 	   distance = 1.5
   })
 
-  exports['qb-target']:AddBoxZone("packing", PackingChicken.targetZone, 1.4, 1.4, {
+exports['qb-target']:AddBoxZone("packing", PackingChicken.targetZone, 1.4, 1.4, {
 	name="packing",
 	heading = PackingChicken.heading,
 	debugPoly = false,
@@ -116,7 +114,7 @@ exports['qb-target']:AddBoxZone("collectchic", CollectChicken.targetZone, 1.4, 1
 	   distance = 1.5
   })
 
-  exports['qb-target']:AddBoxZone("sell", SellChicken.targetZone, 1.4, 1.4, {
+exports['qb-target']:AddBoxZone("sell", SellChicken.targetZone, 1.4, 1.4, {
 	name="sell",
 	heading = SellChicken.heading,
 	debugPoly = false,
@@ -128,13 +126,13 @@ exports['qb-target']:AddBoxZone("collectchic", CollectChicken.targetZone, 1.4, 1
 				type = "server",
 				event = "knoes:sellItems",
 				icon = "fas fa-dollar-sign",
-				label = "Chicken Sell",
+				label = "Sell Chicken",
 			},
 		},
 	   distance = 1.5
   })
 
-  exports['qb-target']:AddBoxZone("car", JobCar.targetZone, 1.4, 1.4, {
+exports['qb-target']:AddBoxZone("car", JobCar.targetZone, 1.4, 1.4, {
 	name="car",
 	heading = JobCar.heading,
 	debugPoly = false,
@@ -151,7 +149,73 @@ exports['qb-target']:AddBoxZone("collectchic", CollectChicken.targetZone, 1.4, 1
 	   distance = 1.5
   })
 
-  RegisterNetEvent('knoes:jobvehicle', function()
+-- ▄▄▄▄▄▄▄▄▄▄▄
+--  Events
+-- ▄▄▄▄▄▄▄▄▄▄▄
+
+RegisterNetEvent('knoes-chickenjob:picking', function()
+	QBCore.Functions.Progressbar('collect_chicken', Config.Locales['collect_chicken'], math.random(11000, 15000), false, true, {
+	  disableMovement = true,
+	  disableCarMovement = true,
+	  disableMouse = false,
+	  disableCombat = true,
+	  }, {
+	  animDict = 'mini@repair',
+	  anim = 'fixing_a_player',
+	  flags = 16,
+	  }, {}, {}, function()
+		  TriggerServerEvent('knoes:chickenpicking')
+	  end, function()
+	  QBCore.Functions.Notify(Config.Locales['cancel'], "error")
+	end)
+  end)
+
+
+RegisterNetEvent('knoes-chickenjob:proccessing', function()
+	local hasItem = QBCore.Functions.HasItem('alivechicken')
+	if hasItem then
+		QBCore.Functions.Progressbar('chicken_processing', Config.Locales['chicken_processing'], math.random(8500, 10000), false, true, {
+			disableMovement = true,
+			disableCarMovement = true,
+			disableMouse = false,
+			disableCombat = true,
+			}, {
+			animDict = 'mini@repair',
+			anim = 'fixing_a_player',
+			flags = 16,
+			}, {}, {}, function()
+				processchicken()
+			end, function()
+				QBCore.Functions.Notify(Config.Locales['cancel'], "error")
+		end)
+	else
+		QBCore.Functions.Notify(Config.Locales['not_have_chicken'], "error")
+	end
+end)
+
+RegisterNetEvent('knoes-chickenjob:packing', function()
+	local hasItem = QBCore.Functions.HasItem('slaughteredchicken')
+	if hasItem then
+		QBCore.Functions.Progressbar('chicken_packet', Config.Locales['chicken_packet'], math.random(11000, 15000), false, true, {
+			disableMovement = true,
+			disableCarMovement = true,
+			disableMouse = false,
+			disableCombat = true,
+			}, {
+			animDict = 'mini@repair',
+			anim = 'fixing_a_player',
+			flags = 16,
+			}, {}, {}, function()
+				packedchicken()
+			end, function()
+				QBCore.Functions.Notify(Config.Locales['cancel'], "error")
+		end)
+	else
+		QBCore.Functions.Notify(Config.Locales['not_have_cutchicken'], "error")
+	end
+end)
+
+RegisterNetEvent('knoes:jobvehicle', function()
     local vehicle = {
       {
         header = Config.Locales["main_header"],
@@ -169,20 +233,18 @@ exports['qb-target']:AddBoxZone("collectchic", CollectChicken.targetZone, 1.4, 1
           params = {
               event = 'knoes:removevehicle',
             }
-      },     
+      },
     }
-exports['qb-menu']:openMenu(vehicle)
+	exports['qb-menu']:openMenu(vehicle)
 end)
 
 
-  RegisterNetEvent('knoes:jobvehicles', function()
+RegisterNetEvent('knoes:jobvehicles', function()
     local vehicle = JobCar.Vehicle
     local coords = JobCar.VehicleSpawn
     local knoes = PlayerPedId()
     RequestModel(vehicle)
-    while not HasModelLoaded(vehicle) do
-        Wait(0)
-    end
+    while not HasModelLoaded(vehicle) do Wait(0) end
     if not IsAnyVehicleNearPoint(coords.x, coords.y, coords.z, 5.0) then
         local JobVehicle = CreateVehicle(vehicle, coords, 45.0, true, false)
         SetVehicleHasBeenOwnedByPlayer(JobVehicle,  true)
@@ -213,77 +275,12 @@ RegisterNetEvent('knoes:removevehicle', function()
     QBCore.Functions.Notify(Config.Locales["returned_vehicle"])
 end)
 
-
-
-
-function processchicken()
-    local playerPed = PlayerPedId()
-    local coords = GetEntityCoords(playerPed)
-    local inventory = QBCore.Functions.GetPlayerData().inventory
-    local count = 0
-    if(count == 0) then
-    local x,y,z = table.unpack(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 0.9, -0.98))
-				local dict = 'anim@amb@business@coc@coc_unpack_cut_left@'
-				LoadDict(dict)
-				FreezeEntityPosition(GetPlayerPed(-1),true)
-				TaskPlayAnim(GetPlayerPed(-1), dict, "coke_cut_v1_coccutter", 3.0, -8, -1, 63, 0, 0, 0, 0 )
-				local PedCoords = GetEntityCoords(GetPlayerPed(-1))
-				local yarra = CreateObject(GetHashKey('prop_knife'),PedCoords.x, PedCoords.y,PedCoords.z, true, true, true)
-				AttachEntityToEntity(yarra, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 0), 0.13, 0.14, 0.09, 40.0, 0.0, 0.0, false, false, false, false, 2, true)
-					SetEntityHeading(GetPlayerPed(-1), 311.0)
-					local nane = CreateObject(GetHashKey('prop_int_cf_chick_01'),-94.87, 6207.008, 30.08, true, true, true)
-					SetEntityRotation(nane,90.0, 0.0, 45.0, 1,true)
-    Wait(5000)
-					FreezeEntityPosition(GetPlayerPed(-1),false)
-				DeleteEntity(nane)
-				DeleteEntity(yarra)
-	ClearPedTasks(PlayerPedId())
-	
-    TriggerServerEvent("knoes:chickenprocessing")
-    end
-end
-
-function packedchicken()
-    local playerPed = PlayerPedId()
-    local coords = GetEntityCoords(playerPed)
-    local inventory = QBCore.Functions.GetPlayerData().inventory
-    local count = 0
-
-    if(count == 0) then
-    local x,y,z = table.unpack(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 0.9, -0.98))
-				SetEntityHeading(GetPlayerPed(-1), 40.0)
-				local PedCoords = GetEntityCoords(GetPlayerPed(-1))
-				local zort = CreateObject(GetHashKey('prop_cs_steak'),PedCoords.x, PedCoords.y,PedCoords.z, true, true, true)
-				AttachEntityToEntity(zort, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 0x49D9), 0.15, 0.0, 0.01, 0.0, 0.0, 0.0, false, false, false, false, 2, true)
-				local port = CreateObject(GetHashKey('prop_cs_clothes_box'),PedCoords.x, PedCoords.y,PedCoords.z, true, true, true)
-				AttachEntityToEntity(port, GetPlayerPed(-1), GetPedBoneIndex(GetPlayerPed(-1), 57005), 0.13, 0.0, -0.16, 250.0, -30.0, 0.0, false, false, false, false, 2, true)
-				local zink = 0
-				LoadDict("anim@heists@ornate_bank@grab_cash_heels")
-				TaskPlayAnim(PlayerPedId(), "anim@heists@ornate_bank@grab_cash_heels", "grab", 8.0, -8.0, -1, 1, 0, false, false, false)
-    Wait(6500)
-	
-					FreezeEntityPosition(GetPlayerPed(-1),false)
-					DeleteEntity(port)
-					DeleteEntity(zort)
-	ClearPedTasks(PlayerPedId())
-	
-       TriggerServerEvent("knoes:chickenpacking")
-	   QBCore.Functions.Notify(Config.Locales['packing_chicken'], "success")
-	else
-		QBCore.Functions.Notify(Config.Locales['not_have_cutchicken'], "error")
-    end
-end
-
-
-function LoadDict(dict)
-    RequestAnimDict(dict)
-	while not HasAnimDictLoaded(dict) do
-	  	Wait(10)
-    end
-end
+-- ▄▄▄▄▄▄▄▄▄▄▄
+--  Threads
+-- ▄▄▄▄▄▄▄▄▄▄▄
 
 CreateThread(function()
-	for k,v in pairs(Config.Peds) do
+	for _,v in pairs(Config.Peds) do
 		RequestModel(v.model)
 		while not HasModelLoaded(v.model) do Wait(1) end
 		v.handle = CreatePed(4, v.model, v.coords.x, v.coords.y, v.coords.z-1.0, v.heading, false, false)
@@ -315,10 +312,4 @@ if Config.EnableBlips then
 			EndTextCommandSetBlipName(blip)
 		end
 	end)
-  end
-  
-
-
-
-
-
+end

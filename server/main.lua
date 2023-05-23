@@ -19,7 +19,7 @@ AddEventHandler("knoes:chickenprocessing", function()
     if Player.Functions.RemoveItem("alivechicken", Config.CutChicken) then
 			TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["alivechicken"], 'remove')
 			QBCore.Functions.Notify(Config.Locales['cut_chicken'], "success")
-			if Player.Functions.AddItem("slaughteredchicken", 1) then
+			if Player.Functions.AddItem("slaughteredchicken", Config.slaughteredchicken) then
 			    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["slaughteredchicken"], 'add')
             else
                 TriggerClientEvent('QBCore:Notify', src, Config.Locales["itemerror"])
@@ -34,7 +34,7 @@ AddEventHandler("knoes:chickenpacking", function()
     local Player = QBCore.Functions.GetPlayer(src)
     if Player.Functions.RemoveItem("slaughteredchicken", Config.PacketChicken) then
 			TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["slaughteredchicken"], 'remove')
-			if Player.Functions.AddItem("packagedchicken", 1) then
+			if Player.Functions.AddItem("packagedchicken", Config.PacketChicken) then
 			    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["packagedchicken"], 'add')
             else
                 TriggerClientEvent('QBCore:Notify', src, Config.Locales["itemerror"])

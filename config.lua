@@ -29,6 +29,7 @@ Config.PickingMaxChicken = 5
 Config.PickingMinChicken = 1
 Config.CutChicken = 5
 Config.PacketChicken = 1
+Config.slaughteredchicken = 1
 
 
 
@@ -78,9 +79,9 @@ JobCar = {
 -- ▄▄▄▄▄▄▄▄▄▄▄
 
 Config.Locales = {
-	['collect_chicken'] = 'Picking Alive Chicken',
-	['chicken_processing'] = 'Portion the Chicken..',
-	['chicken_packet'] = 'Packing the Chicken..',
+    ['collect_chicken'] = 'Picking Alive Chicken',
+    ['chicken_processing'] = 'Portion the Chicken..',
+    ['chicken_packet'] = 'Packing the Chicken..',
     ['sell_chicken'] = 'You sold packaged chicken',
     ['cancel'] = 'Cancel',
     ['cut_chicken'] = 'You Cut Chickens',
@@ -118,7 +119,7 @@ Config.Locations = {
 
 
 Config.Peds = {
-	[1] = { handle = nil, model ="a_m_m_fatlatin_01", coords = vector3(1677.47, 4882.56, 42.04), heading = 61.58,  anim = { type = 1, name = "CODE_HUMAN_CROSS_ROAD_WAIT"} }, -- scene
+    [1] = { handle = nil, model ="a_m_m_fatlatin_01", coords = vector3(1677.47, 4882.56, 42.04), heading = 61.58,  anim = { type = 1, name = "CODE_HUMAN_CROSS_ROAD_WAIT"} }, -- scene
     [2] = { handle = nil, model ="a_m_y_busicas_01", coords = vector3(-136.4, 6198.49, 32.38), heading = 46.27,  anim = { type = 1, name = "WORLD_HUMAN_CLIPBOARD"} }, -- scene
 }
 

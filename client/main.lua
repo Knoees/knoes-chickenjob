@@ -172,7 +172,7 @@ RegisterNetEvent('knoes-chickenjob:picking', function()
 
 
 RegisterNetEvent('knoes-chickenjob:proccessing', function()
-	local hasItem = QBCore.Functions.HasItem('alivechicken')
+	local hasItem = QBCore.Functions.HasItem('alivechicken', Config.CutChicken)
 	if hasItem then
 		QBCore.Functions.Progressbar('chicken_processing', Config.Locales['chicken_processing'], math.random(8500, 10000), false, true, {
 			disableMovement = true,
@@ -194,7 +194,7 @@ RegisterNetEvent('knoes-chickenjob:proccessing', function()
 end)
 
 RegisterNetEvent('knoes-chickenjob:packing', function()
-	local hasItem = QBCore.Functions.HasItem('slaughteredchicken')
+	local hasItem = QBCore.Functions.HasItem('slaughteredchicken', Config.slaughteredchicken)
 	if hasItem then
 		QBCore.Functions.Progressbar('chicken_packet', Config.Locales['chicken_packet'], math.random(11000, 15000), false, true, {
 			disableMovement = true,

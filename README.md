@@ -14,3 +14,4 @@ qb-core>shared>items
 		["slaughteredchicken"] 		     = {["name"] = "slaughteredchicken", 			["label"] = "Slaughtered Chicken", 	    ["weight"] = 5000, 		["type"] = "item", 		["image"] = "slaughteredchicken.png", 			["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Slaughtered Chicken"},
 		["packagedchicken"] 		 	 = {["name"] = "packagedchicken", 				["label"] = "Packaged Chicken", 	["weight"] = 5000, 		["type"] = "item", 		["image"] = "packagedchicken.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,   ["combinable"] = nil,   ["description"] = "Packaged Chicken"},
 ```
+Original script : https://github.com/BerlinDev-Five/qb-slaughtererjob

@@ -96,8 +96,7 @@ Config.Locales = {
     ['vehicle_model'] = 'Car: Bison',
     ['delete_car'] = 'Return the Car',
     ['already_vehicle'] = 'There is already a vehicle outside',
-    ['returned_vehicle'] = 'You returned the vehicle',
-    ['itemerror'] = 'Can\'t give the item'
+    ['returned_vehicle'] = 'You returned the vehicle'
 }
 
 

@@ -3,14 +3,11 @@ local QBCore = exports['qb-core']:GetCoreObject()
 RegisterServerEvent('knoes:chickenpicking')
 AddEventHandler('knoes:chickenpicking', function()
 	local src = source
-	local Player = QBCore.Functions.GetPlayer(src)
-    local chicken = math.random(Config.PickingMinChicken,Config.PickingMaxChicken)
-	if Player.Functions.AddItem("alivechicken", chicken) then
-	    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["alivechicken"], 'add')
-    else
-        TriggerClientEvent('QBCore:Notify', src, Config.Locales["itemerror"])
-    end
+	local Player = QBCore.Functions.GetPlayer(source)
+	Player.Functions.AddItem("alivechicken", math.random(Config.PickingMinChicken,Config.PickingMaxChicken))
+	TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["alivechicken"], 'add')
 end)
+
 
 RegisterServerEvent("knoes:chickenprocessing")
 AddEventHandler("knoes:chickenprocessing", function()
